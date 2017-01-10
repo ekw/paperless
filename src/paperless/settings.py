@@ -44,6 +44,7 @@ if os.path.exists("/etc/paperless.conf"):
 
 INSTALLED_APPS = [
 
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

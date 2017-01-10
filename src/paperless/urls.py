@@ -50,6 +50,9 @@ urlpatterns = [
         name="fetch"
     ),
 
+    # Grappelli
+    url(r'^grappelli/', include('grappelli.urls')),
+
     # The Django admin
     url(r"admin/", admin.site.urls),
     url(r"", admin.site.urls),  # This is going away
