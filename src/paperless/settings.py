@@ -250,3 +250,5 @@ SHARED_SECRET = os.getenv("PAPERLESS_SHARED_SECRET", "")
 # Trigger a script after every successful document consumption?
 PRE_CONSUME_SCRIPT = os.getenv("PAPERLESS_PRE_CONSUME_SCRIPT")
 POST_CONSUME_SCRIPT = os.getenv("PAPERLESS_POST_CONSUME_SCRIPT")
+
+GRAPPELLI_ADMIN_TITLE = "Paperless"
