@@ -14,6 +14,12 @@ import os
 
 from dotenv import load_dotenv
 
+
+# Tap paperless.conf if it's available
+if os.path.exists("/etc/paperless.conf"):
+    load_dotenv("/etc/paperless.conf")
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,8 +27,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e11fl1oa-*ytql8p)(06fbj4ukrlo+n7k&q5+$1md7i+mge=ee'
+# The secret key has a default that should be fine so long as you're hosting
+# Paperless on a closed network.  However, if you're putting this anywhere
+# public, you should change the key to something unique and verbose.
+SECRET_KEY = os.getenv(
+    "PAPERLESS_SECRET_KEY",
+    "e11fl1oa-*ytql8p)(06fbj4ukrlo+n7k&q5+$1md7i+mge=ee"
+)
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,10 +46,6 @@ ALLOWED_HOSTS = ["*"]
 _allowed_hosts = os.getenv("PAPERLESS_ALLOWED_HOSTS")
 if _allowed_hosts:
     ALLOWED_HOSTS = _allowed_hosts.split(",")
-
-# Tap paperless.conf if it's available
-if os.path.exists("/etc/paperless.conf"):
-    load_dotenv("/etc/paperless.conf")
 
 
 # Application definition
@@ -251,4 +259,11 @@ SHARED_SECRET = os.getenv("PAPERLESS_SHARED_SECRET", "")
 PRE_CONSUME_SCRIPT = os.getenv("PAPERLESS_PRE_CONSUME_SCRIPT")
 POST_CONSUME_SCRIPT = os.getenv("PAPERLESS_POST_CONSUME_SCRIPT")
 
+# The number of items on each page in the web UI.  This value must be a
+# positive integer, but if you don't define one in paperless.conf, a default of
+# 100 will be used.
+PAPERLESS_LIST_PER_PAGE = int(os.getenv("PAPERLESS_LIST_PER_PAGE", 100))
+
+# Grappelli settings
 GRAPPELLI_ADMIN_TITLE = "Paperless"
+
